@@ -165,22 +165,22 @@ impl From<NonZeroU32> for Error {
     }
 }
 
-#[cfg(feature = "getrandom")]
-impl From<getrandom::Error> for Error {
-    #[inline]
-    fn from(error: getrandom::Error) -> Self {
-        #[cfg(feature = "std")]
-        {
-            Error {
-                inner: Box::new(error),
-            }
-        }
-        #[cfg(not(feature = "std"))]
-        {
-            Error { code: error.code() }
-        }
-    }
-}
+// #[cfg(feature = "getrandom")]
+// impl From<getrandom::Error> for Error {
+//     #[inline]
+//     fn from(error: getrandom::Error) -> Self {
+//         #[cfg(feature = "std")]
+//         {
+//             Error {
+//                 inner: Box::new(error),
+//             }
+//         }
+//         #[cfg(not(feature = "std"))]
+//         {
+//             Error { code: error.code() }
+//         }
+//     }
+// }
 
 #[cfg(feature = "std")]
 impl std::error::Error for Error {

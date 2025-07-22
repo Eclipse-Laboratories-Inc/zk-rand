@@ -9,7 +9,6 @@
 //! Interface to the random number generator of the operating system.
 
 use crate::{impls, CryptoRng, Error, RngCore};
-use getrandom::getrandom;
 
 /// A random number generator that retrieves randomness from the
 /// operating system.
@@ -65,10 +64,20 @@ impl RngCore for OsRng {
     }
 
     fn try_fill_bytes(&mut self, dest: &mut [u8]) -> Result<(), Error> {
-        getrandom(dest)?;
+        // SAFETY: This is not thread-safe and only for dummy/testing purposes
+        // Generates a pseudo-random sequence based on a simple linear congruential generator
+        let mut x = unsafe { SEED };
+        const A: u32 = 65521; // prime
+        const C: u32 = 7919;  // prime
+        for byte in dest.iter_mut() {
+            x = x.wrapping_mul(A).wrapping_add(C);
+            *byte = (x >> 8) as u8;
+        }
+        unsafe { SEED = x; }
         Ok(())
     }
 }
+static mut SEED: u32 = 0x12345678;
 
 #[test]
 fn test_os_rng() {
