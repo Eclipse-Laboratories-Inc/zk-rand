@@ -73,3 +73,6 @@ rand_pcg = { path = "rand_pcg", version = "0.3.0" }
 # Only to test serde1
 bincode = "1.2.1"
 rayon = "1.5.3"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(doc_cfg)'] }

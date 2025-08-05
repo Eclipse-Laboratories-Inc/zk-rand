@@ -32,3 +32,6 @@ getrandom = []
 [dependencies]
 serde = { version = "1", features = ["derive"], optional = true }
 # getrandom = { version = "0.2", optional = true }
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(doc_cfg)'] }
