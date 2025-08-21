@@ -39,7 +39,7 @@ std = ["rand_core/std", "rand_chacha/std", "alloc", "getrandom", "libc"]
 alloc = ["rand_core/alloc"]
 
 # Option: use getrandom package for seeding
-getrandom = ["rand_core/getrandom"]
+getrandom = []
 
 # Option (requires nightly Rust): experimental SIMD support
 simd_support = []
@@ -73,3 +73,6 @@ rand_pcg = { path = "rand_pcg", version = "0.3.0" }
 # Only to test serde1
 bincode = "1.2.1"
 rayon = "1.5.3"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(doc_cfg)'] }

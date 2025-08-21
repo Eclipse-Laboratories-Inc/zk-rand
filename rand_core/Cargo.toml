@@ -24,10 +24,14 @@ rustdoc-args = ["--cfg", "doc_cfg"]
 all-features = true
 
 [features]
-std = ["alloc", "getrandom", "getrandom/std"]    # use std library; should be default but for above bug
+std = ["alloc", "getrandom"]    # use std library; should be default but for above bug
 alloc = []  # enables Vec and Box support without std
 serde1 = ["serde"] # enables serde for BlockRng wrapper
+getrandom = []
 
 [dependencies]
 serde = { version = "1", features = ["derive"], optional = true }
-getrandom = { version = "0.2", optional = true }
+# getrandom = { version = "0.2", optional = true }
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(doc_cfg)'] }
